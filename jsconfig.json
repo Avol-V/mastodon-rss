@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "NodeNext",
+		"lib": ["esnext"],
+		
+		"checkJs": true,
+		"noEmit": true,
+		
+		"strict": true,
+		
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"forceConsistentCasingInFileNames": true,
+		
+		"types": [
+			"node"
+		]
+	},
+	"exclude": [
+		"node_modules",
+		"**/node_modules/*"
+	]
+}

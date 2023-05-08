@@ -1,0 +1,31 @@
+{
+  "name": "mastodon-rss",
+  "version": "1.0.0",
+  "description": "Generates RSS feed from Mastodon home timeline",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "typecheck": "npx -p typescript tsc -p ./jsconfig.json --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Avol-V/mastodon-rss.git"
+  },
+  "keywords": [
+    "mastodon",
+    "rss"
+  ],
+  "author": "Andrey Volynkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Avol-V/mastodon-rss/issues"
+  },
+  "homepage": "https://github.com/Avol-V/mastodon-rss",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.5"
+  }
+}
