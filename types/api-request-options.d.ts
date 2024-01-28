@@ -1,4 +1,4 @@
-export type ApiRequestOptions = {
+export type ApiRequestOptionsBase = {
 	method?: string,
 	headers?: Record<string, string>,
 	body?: object,
@@ -6,3 +6,13 @@ export type ApiRequestOptions = {
 	withoutAuth?: boolean,
 	bodyAsText?: boolean,
 };
+
+export type ApiRequestOptionsWithoutHeaders = ApiRequestOptionsBase & {
+	withHeaders?: false,
+};
+
+export type ApiRequestOptionsWithHeaders = ApiRequestOptionsBase & {
+	withHeaders: true,
+};
+
+export type ApiRequestOptions = ApiRequestOptionsWithoutHeaders | ApiRequestOptionsWithHeaders;
