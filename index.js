@@ -1,7 +1,15 @@
 import { exit } from 'node:process';
 import { parseArgs } from 'node:util';
+import { mkdir } from 'node:fs/promises';
 import { config } from './lib/config.js';
 import { getPackageData } from './lib/get-package-data.js';
+import { readTimelineFile } from './lib/timeline/read-timeline-file.js';
+import { writeTimelineFile } from './lib/timeline/write-timeline-file.js';
+import { dropOld } from './lib/timeline/drop-old.js';
+import { groupByAccount } from './lib/timeline/group-by-account.js';
+import { fetchHomeTimelineUntilId } from './lib/timeline/fetch-home-timeline-until-id.js';
+import { renderRssFeed } from './lib/rss/render-rss-feed.js';
+import { writeRssFile } from './lib/rss/write-rss-file.js';
 import { registerApp } from './auth/register-app.js';
 import { login } from './auth/login.js';
 
@@ -21,7 +29,37 @@ async function runLogin()
 
 async function runGenerate()
 {
-	// TODO
+	console.log( 'Running generate command...' );
+	
+	const previousTimeline = await readTimelineFile();
+	const lastId = previousTimeline[0]?.id;
+	
+	const nextTimeline = await fetchHomeTimelineUntilId( lastId );
+	
+	if ( nextTimeline.length === 0 )
+	{
+		return;
+	}
+	
+	const timeline = [...nextTimeline, ...previousTimeline];
+	
+	dropOld( timeline );
+	
+	const groups = groupByAccount( timeline, lastId );
+	
+	await mkdir(
+		config.rssDirectoryPath,
+		{ recursive: true },
+	);
+	
+	for ( const [account, statuses] of groups )
+	{
+		await writeRssFile( account, renderRssFeed( statuses ) );
+		
+		console.log( account, statuses.length );
+	}
+	
+	await writeTimelineFile( timeline );
 }
 
 async function main()
