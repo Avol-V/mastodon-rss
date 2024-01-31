@@ -1,4 +1,14 @@
 /**
+ * @see https://docs.joinmastodon.org/api/guidelines/#pagination
+ */
+export type PaginationQueryParams = {
+	max_id?: string,
+	since_id?: string,
+	min_id?: string,
+	limit?: number,
+};
+
+/**
  * @see https://docs.joinmastodon.org/methods/apps/#create
  */
 export type PostApiAppsResponse = {
@@ -216,14 +226,38 @@ export type StatusTag = {
 /**
  * @see https://docs.joinmastodon.org/methods/timelines/#home
  */
-export type GetApiTimelinesHomeQuery = {
-	max_id?: string,
-	since_id?: string,
-	min_id?: string,
-	limit?: number,
-};
+export type GetApiTimelinesHomeQuery = PaginationQueryParams;
 
 /**
  * @see https://docs.joinmastodon.org/methods/timelines/#home
  */
 export type GetApiTimelinesHomeResponse = Array<Status>;
+
+/**
+ * @see https://docs.joinmastodon.org/methods/accounts/#lookup
+ */
+export type GetApiAccountsLookupQuery = {
+	acct: string,
+};
+
+/**
+ * @see https://docs.joinmastodon.org/methods/accounts/#lookup
+ */
+export type GetApiAccountsLookupResponse = Account;
+
+/**
+ * @see https://docs.joinmastodon.org/methods/accounts/#following
+ */
+export type GetApiAccountsFollowingPath = {
+	id: string,
+};
+
+/**
+ * @see https://docs.joinmastodon.org/methods/accounts/#following
+ */
+export type GetApiAccountsFollowingQuery = PaginationQueryParams;
+
+/**
+ * @see https://docs.joinmastodon.org/methods/accounts/#following
+ */
+export type GetApiAccountsFollowingResponse = Array<Account>;
