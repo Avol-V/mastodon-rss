@@ -2,30 +2,41 @@
   "name": "mastodon-rss",
   "version": "1.0.0",
   "description": "Generates RSS feed from Mastodon home timeline",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node index.js",
-    "typecheck": "npx -p typescript tsc -p ./jsconfig.json --noEmit"
+  "keywords": [
+    "mastodon",
+    "rss"
+  ],
+  "homepage": "https://github.com/Avol-V/mastodon-rss",
+  "bugs": {
+    "url": "https://github.com/Avol-V/mastodon-rss/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Avol-V/mastodon-rss.git"
   },
-  "keywords": [
-    "mastodon",
-    "rss"
-  ],
-  "author": "Andrey Volynkin",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Avol-V/mastodon-rss/issues"
-  },
-  "homepage": "https://github.com/Avol-V/mastodon-rss",
-  "engines": {
-    "node": ">=18.0.0"
+  "author": "Andrey Volynkin",
+  "type": "module",
+  "main": "index.js",
+  "bin": "index.js",
+  "files": [
+    "api",
+    "auth",
+    "lib",
+    "types",
+    "typings",
+    "index.js",
+    "jsconfig.json"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "typecheck": "npx -p typescript tsc -p ./jsconfig.json --noEmit",
+    "prepublishOnly": "npm run typecheck"
   },
   "devDependencies": {
     "@types/node": "^18.16.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { exit } from 'node:process';
 import { parseArgs } from 'node:util';
 import { mkdir } from 'node:fs/promises';
@@ -16,6 +18,14 @@ import { writeRssFile } from './lib/rss/write-rss-file.js';
 import { fetchAllFollowing } from './lib/following/fetch-all-following.js';
 import { registerApp } from './auth/register-app.js';
 import { login } from './auth/login.js';
+
+async function makeRssDirectory()
+{
+	await mkdir(
+		config.rssDirectoryPath,
+		{ recursive: true },
+	);
+}
 
 async function runLogin()
 {
@@ -51,10 +61,7 @@ async function runGenerate()
 	
 	const groups = groupByAccount( timeline, lastId );
 	
-	await mkdir(
-		config.rssDirectoryPath,
-		{ recursive: true },
-	);
+	await makeRssDirectory();
 	
 	for ( const [accountName, statuses] of groups )
 	{
@@ -76,6 +83,8 @@ async function runPrepareFollowing( acct )
 	const targetAccount = await lookupAccount( { acct } );
 	
 	const followingAccounts = await fetchAllFollowing( targetAccount.id );
+	
+	await makeRssDirectory();
 	
 	for ( const account of followingAccounts )
 	{
